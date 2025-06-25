@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const Formulario = () => {
   const [formulario, setFormulario] = useState({
@@ -12,6 +13,7 @@ const Formulario = () => {
   });
 
   const [mensajeRespuesta, setMensajeRespuesta] = useState('');
+  const [captchaToken, setCaptchaToken] = useState(null); // Guarda el token del captcha
 
   const handleChange = (e) => {
     setFormulario({
@@ -20,12 +22,25 @@ const Formulario = () => {
     });
   };
 
+  const handleCaptchaChange = (token) => {
+    setCaptchaToken(token);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMensajeRespuesta('');
 
+    if (!captchaToken) {
+      setMensajeRespuesta('Por favor verifica que no eres un robot.');
+      return;
+    }
+
     try {
-      const res = await axios.post('http://localhost:5000/formulario', formulario);
+      const res = await axios.post('http://localhost:5000/formulario', {
+        ...formulario,
+        captchaToken, // Asegúrate de enviar esto
+      });
+
       setMensajeRespuesta(res.data);
       setFormulario({
         nombre: '',
@@ -35,9 +50,10 @@ const Formulario = () => {
         correo: '',
         mensaje: ''
       });
+      setCaptchaToken(null);
     } catch (error) {
       console.error(error);
-      setMensajeRespuesta('Error al enviar el formulario');
+      setMensajeRespuesta(error.response?.data?.message || 'Error al enviar el formulario');
     }
   };
 
@@ -70,6 +86,15 @@ const Formulario = () => {
           <label>Mensaje:</label>
           <textarea name="mensaje" value={formulario.mensaje} onChange={handleChange} required />
         </div>
+
+        {/* CAPTCHA */}
+        <div style={{ marginTop: '10px', marginBottom: '10px' }}>
+          <ReCAPTCHA
+            sitekey="TU_SITE_KEY_PUBLICA" // tu clave pública desde Google
+            onChange={handleCaptchaChange}
+          />
+        </div>
+
         <button type="submit">Enviar</button>
       </form>
     </div>
