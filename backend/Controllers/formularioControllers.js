@@ -1,5 +1,5 @@
 const db = require("../database");
-const fetch = require("node-fetch");
+const axios = require("axios");
 
 exports.crearFormulario = async (req, res) => {
   const {
@@ -12,41 +12,55 @@ exports.crearFormulario = async (req, res) => {
     captchaToken
   } = req.body;
 
-  // Verifica si viene el token
   if (!captchaToken) {
     return res.status(400).json({ message: "Captcha no enviado" });
   }
 
   try {
-    // Valida el captcha con Google
-const secretKey = process.env.RECAPTCHA_SECRET;
-const captchaResponse = await fetch(`https://www.google.com/recaptcha/api/siteverify`, {
-  method: "POST",
-  headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  body: `secret=${secretKey}&response=${captchaToken}`
-});
-const captchaData = await captchaResponse.json();
+    const secretKey = process.env.RECAPTCHA_SECRET;
 
-if (!captchaData.success) {
-  return res.status(403).json({ message: "Captcha inválido. Inténtalo de nuevo." });
-}
+    const captchaResponse = await axios.post(
+      "https://www.google.com/recaptcha/api/siteverify",
+      null,
+      {
+        params: {
+          secret: secretKey,
+          response: captchaToken
+        }
+      }
+    );
 
-    // Si el captcha es válido, guardar en la BD
+    if (!captchaResponse.data.success) {
+      return res.status(403).json({ message: "Captcha inválido. Inténtalo de nuevo." });
+    }
+
     const sql = `
-      INSERT INTO formulario (nombre, apellidoPaterno, apellidoMaterno, celContacto, correo, mensaje)
-      VALUES (?, ?, ?, ?, ?, ?)
+      INSERT INTO formulario (
+        nombre,
+        apellidoPaterno,
+        apellidoMaterno,
+        celContacto,
+        correo,
+        mensaje,
+        captchaToken
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
 
-    db.query(sql, [nombre, apellidoPaterno, apellidoMaterno, celContacto, correo, mensaje], (err, result) => {
-      if (err) {
-        console.error("Error al insertar datos:", err);
-        return res.status(500).send("Error al guardar el formulario");
+    db.query(
+      sql,
+      [nombre, apellidoPaterno, apellidoMaterno, celContacto, correo, mensaje, captchaToken],
+      (err, result) => {
+        if (err) {
+          console.error("Error al insertar datos:", err);
+          return res.status(500).send("Error al guardar el formulario");
+        }
+        res.status(200).send("Formulario guardado correctamente");
       }
-      res.status(200).send("Formulario guardado correctamente");
-    });
+    );
 
   } catch (error) {
-    console.error("Error al validar captcha:", error);
+    console.error("Error al validar captcha:", error.message || error);
     res.status(500).json({ message: "Error al verificar captcha" });
   }
 };

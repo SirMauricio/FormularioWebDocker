@@ -1,0 +1,102 @@
+/* Contenedor principal */
+.form-container {
+  max-width: 480px;
+  margin: 2.5rem auto;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Título */
+.form-title {
+  text-align: center;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  color: #374151; /* gris oscuro */
+}
+
+/* Mensajes (alertas) */
+.mensaje {
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+  color: white;
+}
+
+.mensaje.success {
+  background-color: #22c55e; /* verde */
+}
+
+.mensaje.error {
+  background-color: #ef4444; /* rojo */
+}
+
+.mensaje.info {
+  background-color: #3b82f6; /* azul */
+}
+
+/* Formulario */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Campo individual */
+.campo {
+  display: flex;
+  flex-direction: column;
+}
+
+.campo label {
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  color: #4b5563; /* gris */
+}
+
+.campo input,
+.campo textarea {
+  padding: 0.6rem 1rem;
+  border: 1.5px solid #d1d5db; /* gris claro */
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.3s ease;
+  resize: vertical;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+  outline: none;
+  border-color: #3b82f6; /* azul */
+  box-shadow: 0 0 5px #3b82f6aa;
+}
+
+/* Captcha */
+.captcha-container {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+/* Botón enviar */
+.btn-enviar {
+  padding: 0.75rem 0;
+  background-color: #3b82f6; /* azul */
+  color: white;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-enviar:hover {
+  background-color: #2563eb; /* azul más oscuro */
+}

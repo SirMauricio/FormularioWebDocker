@@ -1,13 +1,40 @@
-import Footer from './componentes/footer.jsx';
-import Formulario from './componentes/Formulario.jsx';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ProtectedRoute, ProtectedRouteLogin } from "./ProtectedRoute";
+import { AuthProvider } from "./AuthContext";
+import Header from "./componentes/header";
+import Footer from "./componentes/footer";
+import Login from "./componentes/login";
+import Formulario from "./componentes/Formulario";
+
 
 function App() {
-  return (
-    <div className="App">
-      <Formulario />
-            <Footer />
-    </div>
-  );
+    return (
+        <AuthProvider>
+            <Router>
+                <Header />
+                <Routes>
+                    {/* Redirige desde / al login si no está logueado */}
+                    <Route path="/" element={<ProtectedRouteLogin />}>
+                        <Route index element={<Login />} />
+                    </Route>
+
+                    {/* Página de login */}
+                    <Route path="/login" element={<ProtectedRouteLogin />}>
+                        <Route index element={<Login />} />
+                    </Route>
+
+                    {/* Rutas protegidas */}
+                    <Route element={<ProtectedRoute />}>
+                        <Route path="/formulario" element={<Formulario />} />
+                        {/* Agrega aquí más rutas protegidas */}
+                    </Route>
+
+                </Routes>
+                <Footer />
+            </Router>
+        </AuthProvider>
+    );
 }
 
 export default App;

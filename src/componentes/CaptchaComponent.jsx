@@ -7,7 +7,7 @@ const CaptchaComponent = ({ onChange }) => {
 
   return (
     <ReCAPTCHA
-      sitekey="6Lcun2wrAAAAAEshnn7fxCDmy_1_kGMcckbbSHET"
+      sitekey="6Lec9YcrAAAAABVe0Addu8JwC0SZV_qaDEEpGpO-"
       ref={captchaRef}
       onChange={onChange}
     />
