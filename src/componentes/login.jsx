@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from '../AuthContext';
-import { useNavigate } from 'react-router-dom';  // <-- Importar navigate
+import { useNavigate } from 'react-router-dom'; 
 import "./login.css";
 
 const Login = () => {
@@ -13,7 +13,7 @@ const Login = () => {
   const { login } = useAuth();
   const [rol, setRol] = useState('');
   
-  const navigate = useNavigate();  // <-- Hook navigate
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     document.body.classList.add('login-page');
@@ -22,10 +22,14 @@ const Login = () => {
 
   const iniciarSesion = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/login/", {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/login/`,
+      {
         correo: email.trim(),
         contrasena: password,
-      });
+      }
+    );
+
 
       if (response.data.status) {
         setUserId(response.data.respuesta.id_usuario);
@@ -42,7 +46,7 @@ const Login = () => {
 
   const confirmarCodigo = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/login/confirmar", {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/login/confirmar`, {
         id: userId,
         codigo: securityCode,
       });
