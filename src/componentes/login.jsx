@@ -23,7 +23,7 @@ const Login = () => {
   const iniciarSesion = async () => {
     try {
     const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/login/`,
+      `${import.meta.env.VITE_API_URL}/login`,
       {
         correo: email.trim(),
         contrasena: password,
