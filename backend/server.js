@@ -17,10 +17,13 @@ app.use((req, res, next) => {
 
 // CORS configurado para local y dominio en producción
 const corsOptions = {
-  origin: ['http://localhost:5173', 'https://ramita.shop'],
-  credentials: true,
+origin: ['http://localhost:5173', 'https://ramita.shop'], 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true
 };
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+
 
 // Parse JSON (puedes usar express.json() en vez de bodyParser)
 app.use(express.json());
