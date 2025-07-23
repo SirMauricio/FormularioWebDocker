@@ -1,19 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-// const bodyParser = require('body-parser'); // opcional si usas express.json()
+const bodyParser = require('body-parser');
 
 const formularioRoutes = require('./routes/formularioRoutes'); 
 const Admin = require('./routes/usersRouters');
 const login = require('./routes/loginRouters'); 
 
 const app = express();
-
-// // Middleware para logging
-// app.use((req, res, next) => {
-//   console.log(`Request recibida: ${req.method} ${req.url}`);
-//   next();
-// });
 
 // CORS configurado para local y dominio en producción
 const corsOptions = {
