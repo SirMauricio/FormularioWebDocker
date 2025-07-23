@@ -9,11 +9,11 @@ const login = require('./routes/loginRouters');
 
 const app = express();
 
-// Middleware para logging
-app.use((req, res, next) => {
-  console.log(`Request recibida: ${req.method} ${req.url}`);
-  next();
-});
+// // Middleware para logging
+// app.use((req, res, next) => {
+//   console.log(`Request recibida: ${req.method} ${req.url}`);
+//   next();
+// });
 
 // CORS configurado para local y dominio en producción
 const corsOptions = {
