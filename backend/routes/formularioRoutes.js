@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const formularioController = require('../controllers/formularioControllers');
+const formularioController = require('../Controllers/formularioControllers');
 
 // Ruta para crear nuevo formulario
 router.post('/', formularioController.crearFormulario);
