@@ -1,11 +1,11 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import './footer.css';
 
 const Footer = () => {
   const location = useLocation();
 
-  // Mostrar solo si NO estamos en / (login)
+  // Ocultar el footer en la página de login (/)
   if (location.pathname === '/') {
     return null;
   }
@@ -13,6 +13,9 @@ const Footer = () => {
   return (
     <footer className="footer-container">
       <p>&copy; 2025 FormularioWeb - Todos los derechos reservados</p>
+      <Link to="/privacidad" className="footer-link">
+        Política de Privacidad
+      </Link>
     </footer>
   );
 };

@@ -6,6 +6,7 @@ import Header from "./componentes/header";
 import Footer from "./componentes/footer";
 import Login from "./componentes/login";
 import Formulario from "./componentes/Formulario";
+import PrivacyPolicy from "./pages/infoPoliticas";
 
 
 function App() {
@@ -29,6 +30,13 @@ function App() {
                         <Route path="/formulario" element={<Formulario />} />
                         {/* Agrega aquí más rutas protegidas */}
                     </Route>
+
+                    {/* Admin */}
+                    <Route element={<ProtectedAdmin />}>
+                        <Route path="/dashboard" element={<Dashboard />} />
+                    </Route>
+
+                    <Route path="/privacidad" element={<PrivacyPolicy />} />
 
                 </Routes>
                 <Footer />
