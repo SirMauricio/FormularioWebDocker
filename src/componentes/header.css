@@ -55,3 +55,21 @@
 .logout-button:hover {
     background-color: #f7d515;
 }
+
+.dashboard-button {
+background-color: #3498db;  /* azul agradable */
+color: white;
+font-weight: 600;
+border: none;
+padding: 10px 20px;
+border-radius: 8px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+width: 100%; /* para que ocupe todo el ancho del sidebar */
+margin-bottom: 1rem;
+text-align: center;
+}
+
+.dashboard-button:hover {
+  background-color: #2980b9; /* azul más oscuro al pasar el mouse */
+}

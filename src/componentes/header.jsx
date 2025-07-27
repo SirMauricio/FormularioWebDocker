@@ -36,6 +36,13 @@ const Header = () => {
             {isLoggedIn && (
                 <div className="logout-container">
                     <button
+                        onClick={() => navigate('/dashboard')}
+                        className="dashboard-button"
+                    style={{ marginBottom: '1rem' }}
+                    >
+                    📊 Dashboard
+                </button>
+                    <button
                         onClick={() => {
                             logout();
                             navigate('/login');
