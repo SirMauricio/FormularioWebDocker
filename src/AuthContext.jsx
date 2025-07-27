@@ -26,10 +26,11 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('rol', JSON.stringify(rol));
     }, [rol]);
 
-    const login = (userData) => {
-        setLoggedIn(true);
-        setRol(userData.rol); 
-    };
+const login = (userData) => {
+    setLoggedIn(true);
+    setRol(Number(userData.rol));  // FORZAR A NÚMERO
+};
+
 
     const logout = () => {
         setLoggedIn(false);

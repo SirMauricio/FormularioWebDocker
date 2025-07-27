@@ -18,7 +18,7 @@ export const ProtectedRouteLogin = () => {
 export const ProtectedAdmin = () => {
     const { rol } = useAuth();
 
-    if (rol !== 1) {
+    if (Number(rol) !== 1) {
         alert('Acceso denegado: esta sección es solo para administradores.');
         return <Navigate to="/formulario" replace />;
     }
