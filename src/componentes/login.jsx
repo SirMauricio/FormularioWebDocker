@@ -3,6 +3,7 @@ import axios from "axios";
 import { useAuth } from '../AuthContext';
 import { useNavigate } from 'react-router-dom'; 
 import "./login.css";
+import logo from '../assets/logo.png';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -79,7 +80,7 @@ const Login = () => {
       <div className="login-box mt-8 mb-8">
         <img
           className="logito"
-          src="https://cdn-icons-png.flaticon.com/512/2658/2658211.png"
+          src={logo}
           alt="Formulario Web Logo"
         />
         <h1 className="project-title">Formulario WEB</h1>

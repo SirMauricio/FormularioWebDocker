@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { ProtectedRoute, ProtectedRouteLogin } from "./ProtectedRoute";
+import { ProtectedRoute, ProtectedRouteLogin, ProtectedAdmin } from "./ProtectedRoute";
 import { AuthProvider } from "./AuthContext";
 import Header from "./componentes/header";
 import Footer from "./componentes/footer";
