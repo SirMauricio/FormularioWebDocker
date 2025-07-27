@@ -143,7 +143,7 @@ const Formulario = () => {
 
         <div className="captcha-container">
           <ReCAPTCHA
-            sitekey="6Lec9YcrAAAAABVe0Addu8JwC0SZV_qaDEEpGpO-"
+            sitekey="6Lcln2wrAAAAAEjW4SLk8aKJ8ZaTjYYwbH4vAP5k"
             onChange={handleCaptchaChange}
           />
         </div>
