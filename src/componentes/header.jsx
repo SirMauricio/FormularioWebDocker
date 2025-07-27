@@ -6,16 +6,15 @@ import logo from '../assets/logo.png';
 
 const Header = () => {
     const location = useLocation();
+    const allowedRoutes = ['/formulario', '/dashboard', '/infoPoliticas'];
 
-  // Mostrar solo en /formulario
-    if (location.pathname !== '/formulario') {
+    if (!allowedRoutes.includes(location.pathname)) {
         return null;
     }
 
-
     const auth = useAuth();
     if (!auth) {
-    return null;
+        return null;
     }
 
     const { isLoggedIn, logout } = auth;
@@ -23,32 +22,33 @@ const Header = () => {
 
     return (
         <aside className="sidebar-container">
-        <div>
-            <div className="logo-container p-4 flex items-center gap-3">
-            <img
-                src={logo}                
-                alt="Logo de FormularioWEB"
-                className="logo w-12 h-12"
-            />
-            <h1 className="header-title">FormularioWEB</h1>
-        </div>
-        </div>
+            <div>
+                <div className="logo-container p-4 flex items-center gap-3">
+                    <img
+                        src={logo}
+                        alt="Logo de FormularioWEB"
+                        className="logo w-12 h-12"
+                    />
+                    <h1 className="header-title">FormularioWEB</h1>
+                </div>
+            </div>
 
-        {isLoggedIn && (
-            <div className="logout-container">
-            <button
-                onClick={() => {
-                logout();
-                navigate('/login');
-            }}
-                className="logout-button"
-            >
-            🔓 Cerrar Sesión
-            </button>
-        </div>
-        )}
-    </aside>
+            {isLoggedIn && (
+                <div className="logout-container">
+                    <button
+                        onClick={() => {
+                            logout();
+                            navigate('/login');
+                        }}
+                        className="logout-button"
+                    >
+                        🔓 Cerrar Sesión
+                    </button>
+                </div>
+            )}
+        </aside>
     );
 };
 
 export default Header;
+

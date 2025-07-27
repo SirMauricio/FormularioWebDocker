@@ -1,5 +1,7 @@
 const connection = require('./database');
 const bcrypt = require('bcryptjs');
+require('dotenv').config();
+
 
 async function migrarContrasenas() {
   connection.query('SELECT id_usuario, contrasena FROM usuarios', async (error, results) => {
