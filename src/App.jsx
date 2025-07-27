@@ -6,7 +6,7 @@ import Header from "./componentes/header";
 import Footer from "./componentes/footer";
 import Login from "./componentes/login";
 import Formulario from "./componentes/Formulario";
-import Formulario from "./componentes/Dashboard";
+import Dashboard from "./componentes/Dashboard";
 import PrivacyPolicy from "./componentes/infoPoliticas";
 
 
