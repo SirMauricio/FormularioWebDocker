@@ -33,32 +33,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
-
-
-// Montar rutas con manejo de errores para detectar problemas
-try {
-  app.use('/formulario', formularioRoutes);
-  console.log('Ruta /formulario montada correctamente');
-} catch (err) {
-  console.error('Error montando /formulario:', err);
-}
-
-try {
-  app.use('/login', login);
-  console.log('Ruta /login montada correctamente');
-} catch (err) {
-  console.error('Error montando /login:', err);
-}
-
-try {
-  app.use('/users', Admin);
-  console.log('Ruta /users montada correctamente');
-} catch (err) {
-  console.error('Error montando /users:', err);
-}
-
-// Ruta de prueba
-app.get("/", (req, res) => {
-  res.send("API funcionando correctamente");
-});
-
