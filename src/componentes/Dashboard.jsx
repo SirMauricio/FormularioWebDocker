@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -6,13 +7,13 @@ const [formularios, setFormularios] = useState([]);
 const [cargando, setCargando] = useState(true);
 
 useEffect(() => {
-    fetch('/api/formulario') // Asegúrate de que esta ruta esté mapeada en Express
-    .then((res) => res.json())
-    .then((data) => {
-        setFormularios(data);
+    axios
+        .get(`${import.meta.env.VITE_API_URL}/formulario`)
+        .then((res) => {
+        setFormularios(res.data);
         setCargando(false);
     })
-    .catch((error) => {
+        .catch((error) => {
         console.error('Error al cargar formularios:', error);
         setCargando(false);
     });
@@ -31,28 +32,28 @@ return (
         ) : (
             <table className="dashboard-table">
             <thead>
-            
-            <tr>
+                <tr>
                 <th>ID</th>
                 <th>Nombre completo</th>
                 <th>Teléfono</th>
                 <th>Correo</th>
                 <th>Mensaje</th>
+                <th>Token</th>
                 </tr>
             </thead>
             <tbody>
                 {formularios.map((item) => (
-                <tr key={item.id}>
+                    <tr key={item.id}>
                     <td>{item.id}</td>
                     <td>{`${item.nombre} ${item.apellidoPaterno} ${item.apellidoMaterno}`}</td>
                     <td>{item.celContacto}</td>
                     <td>{item.correo}</td>
                     <td>{item.mensaje}</td>
                     <td className="token-cell">{item.captchaToken}</td>
-                </tr>
+                    </tr>
                 ))}
             </tbody>
-        </table>
+            </table>
         )}
         </>
     )}
@@ -61,3 +62,4 @@ return (
 };
 
 export default Dashboard;
+
