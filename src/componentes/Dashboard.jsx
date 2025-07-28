@@ -38,7 +38,6 @@ return (
                 <th>Teléfono</th>
                 <th>Correo</th>
                 <th>Mensaje</th>
-                <th>Token</th>
                 </tr>
             </thead>
             <tbody>
