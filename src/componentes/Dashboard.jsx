@@ -44,12 +44,11 @@ return (
             <tbody>
                 {formularios.map((item) => (
                     <tr key={item.id}>
-                    <td>{item.id}</td>
+                    <td>{item.forId}</td>
                     <td>{`${item.nombre} ${item.apellidoPaterno} ${item.apellidoMaterno}`}</td>
                     <td>{item.celContacto}</td>
                     <td>{item.correo}</td>
                     <td>{item.mensaje}</td>
-                    <td className="token-cell">{item.captchaToken}</td>
                     </tr>
                 ))}
             </tbody>
