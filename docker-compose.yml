@@ -1,27 +1,38 @@
-networks:
-  webnet:
-    driver: bridge
+version: "3.8"
 
 services:
-  suarez_frontend:
-    build: ./frontend
-    networks:
-      - webnet
-
-  suarez_backend:
+  backend:
     build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
     networks:
       - webnet
 
-  services:
+  frontend:
+    build: .
+    ports:
+      - "2239:80"  
+    depends_on:
+      - backend
+    networks:
+      - webnet
+
   nginx:
     image: nginx:alpine
+    container_name: nginx-suarez
     ports:
       - "80:80"
       - "443:443"
+    depends_on:
+      - frontend
+      - backend
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - /etc/letsencrypt:/etc/letsencrypt:ro 
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     networks:
       - webnet
 
+networks:
+  webnet:
