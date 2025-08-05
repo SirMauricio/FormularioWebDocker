@@ -23,13 +23,14 @@ const Login = () => {
 
   const iniciarSesion = async () => {
     try {
-    const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/login`,
-      {
-        correo: email.trim(),
-        contrasena: password,
-      }
-    );
+const response = await axios.post(
+  `${import.meta.env.VITE_API_URL}/login`,
+  {
+    correo: email.trim(),
+    contrasena: password,
+  }
+);
+
 
 
       if (response.data.status) {
@@ -47,10 +48,14 @@ const Login = () => {
 
   const confirmarCodigo = async () => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/login/confirmar`, {
-        id: userId,
-        codigo: securityCode,
-      });
+const response = await axios.post(
+  `${import.meta.env.VITE_API_URL}/login/confirmar`,
+  {
+    id: userId,
+    codigo: securityCode,
+  }
+);
+
 
       if (response.data.status) {
         login({ id_usuario: userId, rol });

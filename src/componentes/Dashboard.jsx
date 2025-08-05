@@ -8,7 +8,7 @@ const [cargando, setCargando] = useState(true);
 
 useEffect(() => {
     axios
-        .get(`${import.meta.env.VITE_API_URL}/formulario`)
+        .get(`/formulario`)
         .then((res) => {
         setFormularios(res.data);
         setCargando(false);

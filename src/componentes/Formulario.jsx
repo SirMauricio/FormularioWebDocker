@@ -39,7 +39,7 @@ const Formulario = () => {
     }
 
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/formulario`, {
+      const res = await axios.post(`/formulario`, {
         ...formulario,
         captchaToken,
       });
