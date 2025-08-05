@@ -8,12 +8,7 @@ import logo from '../assets/logo.png';
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [secondStep, setSecondStep] = useState(false);
-  const [userId, setUserId] = useState('');
-  const [securityCode, setSecurityCode] = useState('');
   const { login } = useAuth();
-  const [rol, setRol] = useState('');
-  
   const navigate = useNavigate(); 
 
   useEffect(() => {
@@ -23,54 +18,31 @@ const Login = () => {
 
   const iniciarSesion = async () => {
     try {
-const response = await axios.post(
-  `${import.meta.env.VITE_API_URL}/login`,
-  {
-    correo: email.trim(),
-    contrasena: password,
-  }
-);
-
-
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/login`,
+        {
+          correo: email.trim(),
+          contrasena: password,
+        }
+      );
 
       if (response.data.status) {
-        setUserId(response.data.respuesta.id_usuario);
-        setRol(response.data.respuesta.rol);
-        setSecondStep(true);
+        const id = response.data.respuesta.id_usuario;
+        const rol = response.data.respuesta.rol;
+
+        login({ id_usuario: id, rol });
+
+        if (rol === 1) {
+          navigate(`/users/${id}`);
+        } else {
+          navigate('/formulario');
+        }
       } else {
         alert("Correo o contraseña incorrectos.");
       }
     } catch (error) {
       console.error("Error al autenticar:", error);
       alert("Error al conectar con el servidor.");
-    }
-  };
-
-  const confirmarCodigo = async () => {
-    try {
-const response = await axios.post(
-  `${import.meta.env.VITE_API_URL}/login/confirmar`,
-  {
-    id: userId,
-    codigo: securityCode,
-  }
-);
-
-
-      if (response.data.status) {
-        login({ id_usuario: userId, rol });
-
-        // Navegar según rol, sin recargar página
-        if (rol === 1) {
-          navigate(`/users/${userId}`);
-        } else {
-          navigate('/formulario');
-        }
-      } else {
-        alert("Código incorrecto.");
-      }
-    } catch (error) {
-      console.error("Error al confirmar código:", error);
     }
   };
 
@@ -83,40 +55,33 @@ const response = await axios.post(
   return (
     <div className="App">
       <div className="login-box mt-8 mb-8">
-        <img
-          className="logito"
-          src={logo}
-          alt="Formulario Web Logo"
-        />
+        <img className="logito" src={logo} alt="Formulario Web Logo" />
         <h1 className="project-title">Formulario WEB</h1>
         <h2>Inicio de Sesión</h2>
-        {!secondStep && <p className="font-bold text-sm text-gray-500">Accede con tus credenciales</p>}
+        <p className="font-bold text-sm text-gray-500">Accede con tus credenciales</p>
 
         <form onSubmit={handleSubmit}>
-          {!secondStep ? (
-            <>
-              <div className="user-box">
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                <label>Correo Electrónico</label>
-              </div>
-              <div className="user-box">
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                <label>Contraseña</label>
-              </div>
-            </>
-          ) : (
-            <div className="user-box">
-              <input type="text" value={securityCode} onChange={(e) => setSecurityCode(e.target.value)} required />
-              <label>Código enviado a tu correo</label>
-            </div>
-          )}
+          <div className="user-box">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <label>Correo Electrónico</label>
+          </div>
+          <div className="user-box">
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <label>Contraseña</label>
+          </div>
 
-          <button
-            type="button"
-            className="login-button"
-            onClick={secondStep ? confirmarCodigo : iniciarSesion}
-          >
-            {secondStep ? "Confirmar Código" : "Ingresar"}
+          <button type="submit" className="login-button">
+            Ingresar
           </button>
         </form>
       </div>
@@ -125,3 +90,4 @@ const response = await axios.post(
 };
 
 export default Login;
+
