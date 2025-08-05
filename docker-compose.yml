@@ -4,7 +4,7 @@ services:
   backend:
     build: ./backend
     ports:
-      - "5000:5000"
+      - "5000:5000"   # backend escucha en 5000, igual en contenedor y host
     environment:
       - NODE_ENV=production
     networks:
@@ -13,7 +13,7 @@ services:
   frontend:
     build: .
     ports:
-      - "2239:80"  
+      - "2239:80"    # frontend escucha en 80 dentro del contenedor, expuesto al host en 2239
     depends_on:
       - backend
     networks:
@@ -23,9 +23,8 @@ services:
     image: nginx:alpine
     container_name: nginx-suarez
     ports:
-    - "8080:80"
-    - "8443:443"
-
+      - "8080:8080"  # mapea el puerto 8080 del host al 8080 del contenedor
+      - "8443:8443"  # mapea el puerto 8443 del host al 8443 del contenedor
     depends_on:
       - frontend
       - backend
