@@ -8,22 +8,28 @@ const login = require('./routes/loginRouters');
 const app = express();
 
 // Configurar CORS
-const allowedOrigins = ['http://localhost:3000', 'http://backend:5000'];
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://backend:5000',
+  'https://suarez.efdiaz.xyz'
+];
 
 const corsOptions = {
-  origin: function(origin, callback) {
-    if (!origin) return callback(null, true); // para peticiones sin origen (Postman, etc)
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true); // permite Postman, curl, etc.
 
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('Origen no permitido por CORS'));
+      callback(new Error('Origen no permitido por CORS: ' + origin));
     }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 };
 
+// ✅ Aplicar CORS
+app.use(cors(corsOptions));
 
 // Parse JSON
 app.use(express.json());
@@ -42,4 +48,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
-
