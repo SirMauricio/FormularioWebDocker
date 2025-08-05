@@ -57,22 +57,25 @@ function generarCodigoAleatorio() {
 
 
 function Login(request, response) {
-  const email = request.body.correo.trim();
-  const password = request.body.contrasena;
+  const email = request.body.correo || request.body.usuario;
+  const password = request.body.contrasena || request.body.password;
+
+  if (!email || !password) {
+    return response.status(400).json({ error: "Faltan campos correo o contraseña" });
+  }
+
+  const emailTrimmed = email.trim();
 
   connection.query(
     `SELECT id_usuario, rol, contrasena_hash FROM usuarios WHERE correo = ?`,
-    [email],
+    [emailTrimmed],
     async (error, result) => {
       if (error) {
         console.error("Error en la consulta:", error);
         return response.status(500).json({ error: "Error interno del servidor" });
       }
 
-      console.log("Resultado de la consulta:", result); 
-
       if (result.length === 0) {
-        console.log("No se encontró usuario con el correo:", email);
         return response.status(200).json({
           respuesta: "No se encontró un usuario con ese correo",
           status: false,
@@ -80,22 +83,17 @@ function Login(request, response) {
       }
 
       const user = result[0];
-      console.log("Usuario encontrado:", user); 
-
-      console.log("Contraseña ingresada:", password);
-      console.log("Contraseña en la base de datos:", user.contrasena_hash);
 
       const passwordMatch = await bcrypt.compare(password, user.contrasena_hash);
 
       if (!passwordMatch) {
-        console.log("Contraseña incorrecta para el usuario:", email); 
         return response.status(200).json({
           respuesta: "Contraseña incorrecta",
           status: false,
         });
       }
 
-      generarCodigoAleatorio();
+      const codigo = generarCodigoAleatorio();
 
       connection.query(
         "UPDATE usuarios SET codigo = ? WHERE id_usuario = ?;",
@@ -106,15 +104,13 @@ function Login(request, response) {
             return response.status(500).json({ error: "Error al guardar el código de verificación" });
           }
 
-          console.log("Código generado y guardado:", codigo); 
-
-          await enviarMail(email, codigo);
+          await enviarMail(emailTrimmed, codigo);
 
           response.status(200).json({
             respuesta: {
               id_usuario: user.id_usuario,
               rol: user.rol,
-              correo: email
+              correo: emailTrimmed
             },
             status: true,
           });
@@ -123,7 +119,6 @@ function Login(request, response) {
     }
   );
 }
-
 
 function confirmarLogin(request, response) {
   const { id, codigo } = request.body;
