@@ -35,9 +35,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // Montar rutas
-app.use('/formulario', formularioRoutes);
-app.use('/login', login);
-app.use('/users', Admin);
+app.use('/api/formulario', formularioRoutes);
+app.use('/api/login', login);
+app.use('/api/users', Admin);
 
 // Ruta de prueba
 app.get("/", (req, res) => {
