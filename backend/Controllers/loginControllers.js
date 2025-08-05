@@ -21,7 +21,7 @@ enviarMail = async(dirreccion, coding) => {
     subject: 'Validación de acceso a TerraVision',
     text: `Estimado usuario,
   
-    Gracias por registrarse en TerraVision. Para completar su inicio de sesión, por favor ingrese el siguiente código de validación en el campo correspondiente en la página de login:
+    Gracias por registrarse en CheemsFormulario. Para completar su inicio de sesión, por favor ingrese el siguiente código de validación en el campo correspondiente en la página de login:
   
     Código de validación: **${coding}**
   
