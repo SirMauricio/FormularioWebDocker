@@ -12,7 +12,7 @@ services:
 
   frontend:
     build: .
-    # No mapees puertos aquí, porque el nginx hará de proxy y servirá el frontend
+
     networks:
       - webnet
 
@@ -20,7 +20,7 @@ services:
     image: nginx:alpine
     container_name: nginx-suarez
     ports:
-      - "8080:8080"
+      - "2334:2334"
       - "8443:8443"
     depends_on:
       - frontend
