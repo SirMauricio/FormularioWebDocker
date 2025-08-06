@@ -1,9 +1,15 @@
-# backend/Dockerfile
-FROM node:20
+FROM node:20-alpine
 
 WORKDIR /app
+
+# Copiar archivos para instalar dependencias
+COPY package*.json ./
+
+RUN npm ci --production
+
+# Copiar resto del código
 COPY . .
-RUN npm install
 
 EXPOSE 5000
+
 CMD ["node", "server.js"]
