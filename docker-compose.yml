@@ -12,8 +12,7 @@ services:
 
   frontend:
     build: .
-    ports:
-      - "2239:3000"
+    # No mapees puertos aquí, porque el nginx hará de proxy y servirá el frontend
     networks:
       - webnet
 
@@ -29,6 +28,7 @@ services:
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - /etc/letsencrypt:/etc/letsencrypt:ro
+      - ./dist:/usr/share/nginx/html:ro
     networks:
       - webnet
 
