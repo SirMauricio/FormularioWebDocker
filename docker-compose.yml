@@ -12,22 +12,25 @@ services:
 
   frontend:
     build: .
+    env_file:
+      - .env
     networks:
       - webnet
 
-nginx:
-  image: nginx:alpine
-  container_name: nginx-suarez
-  ports:
-    - "2330:80"     # Cambiar puerto externo 80 por 2330
-    - "8443:443"    # HTTPS puede mantenerse, si no está en uso
-  depends_on:
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-suarez
+    ports:
+      - "2330:80"     # HTTP mapeado a 2330
+      - "8443:443"    # HTTPS mapeado a 8443
+    depends_on:
       - backend
       - frontend
-  volumes:
+    volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - /etc/letsencrypt:/etc/letsencrypt:ro
-  networks:
+      - ./dist:/usr/share/nginx/html:ro
+    networks:
       - webnet
 
 networks:
