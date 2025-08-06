@@ -19,7 +19,7 @@ services:
     image: nginx:alpine
     container_name: nginx-suarez
     ports:
-      - "80:80"
+      - "2330:80"
       - "443:443"
     depends_on:
       - backend
